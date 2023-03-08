@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import StakingABI from '../utils/abi/StakingABI.json'
-import { erc20ABI ,useContractRead, useContractReads } from "wagmi"
-
+import { erc20ABI, useContractRead, useContractReads } from "wagmi"
+import { useState , useEffect } from 'react'
 
 export const Dashboard = () => {
+    const [holdersAddrs, setHoldersAddrs] = useState(["0x5886F287C4473Ce13c58474a261b31c881f8635d", "0xF455eB0C273b8E48A0415D34072179Aa25611791"]);
+
     const contractFactory = {
         old: "0x7c9210c291E00c2030116FcC930D071BBEC5C30f",
         new: "0xccF6772F52D007E082bF4A01757C4091F5f4dD92"
@@ -11,14 +13,16 @@ export const Dashboard = () => {
     const CONTRACT = contractFactory.new
 
 
-    const { data: holdersAddrs, isError, isLoading, isSuccess} = useContractRead({
+    const { data: contractData, isError, isLoading, isSuccess} = useContractRead({
         address: CONTRACT,
         abi: StakingABI,
         functionName: "getStakeTokens",
     })
 
-    console.log(holdersAddrs, isError, isLoading, isSuccess)
-    
+    useEffect(() => {
+        setHoldersAddrs(contractData)
+    },[contractData])
+
     const groupName = holdersAddrs.map((e) => {
         return {
             address: e,
@@ -26,7 +30,7 @@ export const Dashboard = () => {
             functionName: 'name'
         }
     })
-    console.log(holdersAddrs)
+    // console.log(holdersAddrs)
     const groupSymbol = holdersAddrs.map((e) => {
         return {
             address: e,
@@ -58,6 +62,10 @@ export const Dashboard = () => {
 
     // if (holdersAddrsIsLoading) { return <div> Loading ... </div> }
     return (
+
+        // <main>
+        //     { holdersAddrs }
+        // </main>
 
         <main className=" mt-10 w-5/6">
             <h1 className="text-2xl font-semibold">Dashboard</h1>
