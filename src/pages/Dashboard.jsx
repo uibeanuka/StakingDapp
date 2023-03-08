@@ -23,7 +23,7 @@ export const Dashboard = () => {
         setHoldersAddrs(contractData)
     },[contractData])
 
-    const groupName = holdersAddrs.map((e) => {
+    const groupName = holdersAddrs?.map((e) => {
         return {
             address: e,
             abi: erc20ABI,
@@ -31,14 +31,14 @@ export const Dashboard = () => {
         }
     })
     // console.log(holdersAddrs)
-    const groupSymbol = holdersAddrs.map((e) => {
+    const groupSymbol = holdersAddrs?.map((e) => {
         return {
             address: e,
             abi: erc20ABI,
             functionName: 'symbol'
         }
     }) 
-    const groupAmount = holdersAddrs.map((e) => {
+    const groupAmount = holdersAddrs?.map((e) => {
         return {
             address: e,
             abi: erc20ABI,
@@ -72,7 +72,7 @@ export const Dashboard = () => {
             <div className="grid grid-cols-3 gap-8 mt-10">
 
 
-            {tokenNames.map((e, i) => {
+            {tokenNames?.map((e, i) => {
                 return (
                     <Link to={`/dashboard/${holdersAddrs[i]}`}>
                     <div className="p-4 aspect-square group cursor-pointer relative flex rounded-2xl bg-zinc-50 transition-shadow hover:shadow-md hover:shadow-zinc-900/5">
