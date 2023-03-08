@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-redundant-roles */
 import { Link } from "react-router-dom"
 
 
@@ -41,8 +42,8 @@ export const SideNav = () => {
                             </Link>
                         </li>
                         <li className="relative">
-                            <Link className="flex justify-between gap-2 py-1 pr-3 text-sm transition pl-4 text-zinc-900" to="/profile" aria-current="page">
-                                <span className="truncate">My Profile</span>
+                            <Link className="flex justify-between gap-2 py-1 pr-3 text-sm transition pl-4 text-zinc-900" to="/portfolio" aria-current="page">
+                                <span className="truncate">My Portfolio</span>
                             </Link>
                         </li>
                     </ul>

@@ -17,6 +17,7 @@ import { ConnectKitProvider, getDefaultClient } from "connectkit";
 import { StakePool } from './pages/StakePool';
 import { Dashboard } from './pages/Dashboard';
 import { Token } from './pages/Token';
+import { Portfolio } from './pages/Portfolio';
 
 const chains = [goerli, sepolia];
 
@@ -52,6 +53,7 @@ export const App = () => {
               <Route path="/pool" element={<StakePool />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/:address" element={<Token />} />
+              <Route path="/portfolio" element={<Portfolio />} />
             </Route>
           </Routes>
         </BrowserRouter>
