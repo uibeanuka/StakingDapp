@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { DefaultLayout } from './Layout/DefaultLayout';
+import { Layout } from './Layout/Layout';
 import  './index.css' 
 import { Home } from './pages/Home';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -7,41 +7,55 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { goerli, sepolia} from 'wagmi/chains';
+import { configureChains, createClient, WagmiConfig, chain } from 'wagmi';
+import { sepolia, goerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import { TokenDashboard } from './pages/TokenDashboard';
-const { chains, provider } = configureChains(
-  [goerli, sepolia],
-  [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
-    publicProvider()
-  ]
+import { ConnectKitProvider, getDefaultClient } from "connectkit";
+
+import { StakePool } from './pages/StakePool';
+import { Dashboard } from './pages/Dashboard';
+import { Token } from './pages/Token';
+
+const chains = [goerli, sepolia];
+
+const client = createClient(
+  getDefaultClient({
+    appName: "Wise Voting Platform",
+    alchemyId: process.env.ALCHEMY_ID,
+    chains,
+  }),
 );
-const { connectors } = getDefaultWallets({
-  appName: 'My RainbowKit App',
-  chains
-});
-const wagmiClient = createClient({
-  autoConnect: true,
-  connectors,
-  provider
-})
 
 export const App = () => {
   return (
-    <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<DefaultLayout />} />
-          <Route index element={<Home />} />
-          <Route path="/token" element={<TokenDashboard />} />
-          {/* <Route path="/wise" element={} /> */}
-        </Routes>
-      </BrowserRouter>
-      </RainbowKitProvider>
+
+
+
+    <WagmiConfig client={client}>
+          <ConnectKitProvider
+            chains={chains}
+            mode='light'
+            customTheme={{
+              "--ck-overlay-backdrop-filter": "8px",
+            }}
+            options={{
+              showBalance: true
+            }}
+          >
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="/token" element={<TokenDashboard />} />
+              <Route path="/pool" element={<StakePool />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard/:address" element={<Token />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ConnectKitProvider>
     </WagmiConfig>
   )
 }

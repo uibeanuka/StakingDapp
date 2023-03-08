@@ -1,19 +1,21 @@
 import { erc20ABI, useContractReads } from "wagmi"
+import standard from "../utils/abi/StandardERC20.json"
 
 export const TokenDashboard = () => {
     const def = {
-        address: "0x62f9D3A871cd539EEF606cF3cdF77c30386128AB",
+        address: "0xFE2ecA2a3B933E4D1679cb0EBf272eA45D664644",
         abi: erc20ABI,
     }
     const { data, isError, isLoading } = useContractReads({
         contracts: [
             {
-            ...def,
-            functionName: 'symbol'
+                ...def,
+                abi: standard,
+            functionName: 'tokenName'
             },
             {
             ...def,
-            functionName: 'name'
+            functionName: 'symbol'
             },
             {
             ...def,
@@ -22,8 +24,11 @@ export const TokenDashboard = () => {
         ]
     }
     )
-    return (
+    if (isLoading) {
+        return <div>Loading</div>
+    } return (
         <div>
+            {data}
             {data.forEach((e, i) => {
                 return (
                     <div> {e}</div>
