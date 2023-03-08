@@ -3,7 +3,7 @@ import { useContractRead, useContractWrite, usePrepareContractWrite } from "wagm
     import stakingABI from '../../utils/abi/StakingABI.json'
 
 
-export const StakeForm = () => {
+export const ClaimRewardForm = () => {
 
     const contractAddress = "0xccF6772F52D007E082bF4A01757C4091F5f4dD92";
 
@@ -14,7 +14,7 @@ export const StakeForm = () => {
         const { config } = usePrepareContractWrite({
             address: contractAddress,
             abi: stakingABI,
-            functionName: "StakeToken",
+            functionName: "ClaimReward",
             args: [
                 _contractAddress,tokenAmount
             ],
@@ -60,7 +60,7 @@ export const StakeForm = () => {
                 <div class="absolute inset-0 rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50"><svg aria-hidden="true" class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] fill-black/[0.02] stroke-black/5 dark:fill-white/1"><defs><pattern id=":R56hd6:" width="72" height="56" patternUnits="userSpaceOnUse" x="50%" y="16"><path d="M.5 56V.5H72" fill="none"></path></pattern></defs><rect width="100%" height="100%" strokeWidth="0" fill="url(#:R56hd6:)"></rect><svg x="50%" y="16" class="overflow-visible"><rect strokeWidth="0" width="73" height="57" x="0" y="56"></rect><rect strokeWidth="0" width="73" height="57" x="72" y="168"></rect></svg></svg></div>
             </div>
 
-            <h1 className="text-2xl text-center font-bold mb-8"> Stake Token </h1>
+            <h1 className="text-2xl text-center font-bold mb-8"> Claim Reward </h1>
 
             <div className="mb-8">
                 <div className="flex flex-col gap-4">
@@ -69,7 +69,7 @@ export const StakeForm = () => {
 
                     <div className="flex flex-col gap-2">
                         <label
-                            className=" text-sm">Token Contract Address</label>
+                            className=" text-sm">Claim Reward</label>
                         <input
                             type="text"
                             placeholder="Token Contract Address"
@@ -92,7 +92,7 @@ export const StakeForm = () => {
                 </div>
             </div>
 
-            <button type="submit" className="w-full bg-zinc-800 text-white rounded-md p-2 hover:bg-zinc-900">Withdraw Token</button>
+            <button type="submit" className="w-full bg-zinc-800 text-white rounded-md p-2 hover:bg-zinc-900">Stake Token</button>
         </form>
     )
             
